@@ -41,8 +41,7 @@ class ImpossibleWriterRelay {
 
     // Create WebSocket server
     this.wss = new WebSocket.Server({
-      server: this.server,
-      path: '/room'
+      server: this.server
     });
 
     this.wss.on('connection', (ws, req) => {
@@ -59,9 +58,18 @@ class ImpossibleWriterRelay {
 
   handleConnection(ws, req) {
     const pathname = url.parse(req.url).pathname;
-    const roomId = pathname.split('/').pop();
 
-    if (!roomId || roomId === 'room') {
+    // Extract room ID from path like /room/roomId
+    const pathParts = pathname.split('/').filter(part => part.length > 0);
+
+    if (pathParts.length < 2 || pathParts[0] !== 'room') {
+      ws.close(1008, 'Invalid path. Use /room/{roomId}');
+      return;
+    }
+
+    const roomId = pathParts[1];
+
+    if (!roomId) {
       ws.close(1008, 'Room ID required');
       return;
     }
