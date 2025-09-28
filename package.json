@@ -1,0 +1,24 @@
+{
+  "name": "impossible-writer-relay",
+  "version": "1.0.0",
+  "description": "Real-time WebSocket relay for Impossible Writer collaboration",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "ws": "^8.17.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "websocket",
+    "relay",
+    "collaboration",
+    "real-time"
+  ],
+  "author": "ZYZ DYNAMICS",
+  "license": "MIT"
+}
