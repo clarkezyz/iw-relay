@@ -57,20 +57,26 @@ class ImpossibleWriterRelay {
   }
 
   handleConnection(ws, req) {
-    const pathname = url.parse(req.url).pathname;
+    const parsedUrl = url.parse(req.url, true);
+    const pathname = parsedUrl.pathname;
+    const query = parsedUrl.query;
 
-    // Extract room ID from path like /room/roomId
-    const pathParts = pathname.split('/').filter(part => part.length > 0);
+    let roomId = null;
 
-    if (pathParts.length < 2 || pathParts[0] !== 'room') {
-      ws.close(1008, 'Invalid path. Use /room/{roomId}');
-      return;
+    // Support both path-based and query-based room ID
+    if (pathname.startsWith('/room/')) {
+      // Path-based: /room/roomId
+      const pathParts = pathname.split('/').filter(part => part.length > 0);
+      if (pathParts.length >= 2) {
+        roomId = pathParts[1];
+      }
+    } else if (query.room) {
+      // Query-based: /?room=roomId
+      roomId = query.room;
     }
 
-    const roomId = pathParts[1];
-
     if (!roomId) {
-      ws.close(1008, 'Room ID required');
+      ws.close(1008, 'Room ID required. Use /room/{roomId} or /?room={roomId}');
       return;
     }
 
