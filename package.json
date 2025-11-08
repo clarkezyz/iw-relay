@@ -1,11 +1,16 @@
 {
   "name": "impossible-writer-relay",
   "version": "1.0.0",
-  "description": "Real-time WebSocket relay for Impossible Writer collaboration",
+  "description": "WebSocket relay server for real-time collaborative editing with Impossible Writer",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "LOG_LEVEL=debug node server.js",
+    "prod": "NODE_ENV=production node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/clarkezyz/iw-relay.git"
   },
   "dependencies": {
     "ws": "^8.17.1"
@@ -17,8 +22,15 @@
     "websocket",
     "relay",
     "collaboration",
-    "real-time"
+    "real-time",
+    "impossible-writer",
+    "webrtc",
+    "signaling"
   ],
-  "author": "ZYZ DYNAMICS",
-  "license": "MIT"
+  "author": "Clarke Zyz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/clarkezyz/iw-relay/issues"
+  },
+  "homepage": "https://github.com/clarkezyz/iw-relay#readme"
 }
